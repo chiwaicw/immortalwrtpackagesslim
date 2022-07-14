@@ -27,7 +27,10 @@ define GoCompiler/Default/Make
 		cd "$(1)/src" ; \
 		$(if $(2),GOROOT_FINAL="$(2)/lib/go-$(3)") \
 		$(4) \
-		$(BASH) make.bash --no-banner ; \
+		$(BASH) make.bash \
+		$(if $(findstring s,$(OPENWRT_VERBOSE)),-v) \
+		--no-banner \
+		; \
 	)
 endef
 
@@ -95,8 +98,6 @@ define GoCompiler/Default/Install/Doc
 	$(call GoCompiler/Default/Install/make-dirs,$(2),$(3))
 
 	$(call GoCompiler/Default/Install/install-share-data,$(1),$(2),$(3),doc)
-	$(call GoCompiler/Default/Install/install-share-data,$(1),$(2),$(3),favicon.ico)
-	$(call GoCompiler/Default/Install/install-share-data,$(1),$(2),$(3),robots.txt)
 endef
 
 # $(1) source go root
